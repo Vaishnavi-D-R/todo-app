@@ -1,13 +1,13 @@
 pipeline{
     agent any;
      tools{
-       maven 'maven'
-       jdk 'JDK11'
+       maven 'MAVEN-3.6.3'
+       jdk 'JDK 15'
    }
     stages{
         stage('Fetch project from github'){
             steps{
-                git branch: 'master', url: 'https://github.com/sujjadshaik/todo-app.git'
+                git branch: 'master', url: 'https://github.com/Vaishnavi-D-R/todo-app.git'
             }
                 
         }
@@ -19,7 +19,7 @@ pipeline{
         }
         stage('sonar analysis'){
             steps{
-                withSonarQubeEnv('sonarQube'){
+                withSonarQubeEnv('sonar-server'){
                     sh 'mvn -f app/pom.xml sonar:sonar'
                 }
             }
@@ -27,7 +27,7 @@ pipeline{
         stage('deploy to artifactor'){
             steps{
                 rtUpload (
-            serverId: 'ARTIFACTORY-SERVER',
+            serverId: 'ARTIFACTORY_SERVER',
             spec: '''{
                  "files": [
                              {
@@ -58,7 +58,7 @@ pipeline{
         }
 
         
-        stage('Docker build'){
+      /*   stage('Docker build'){
             steps{
                
                     sh 'docker image prune -a --force'
@@ -67,16 +67,16 @@ pipeline{
                 
             }
         }
-        stage('Pushing images to docker hub'){
+       stage('Pushing images to docker hub'){
             steps{
                 
 
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPWD')]) {
                             // some block
-                   sh "docker login -u sujjad -p ${dockerHubPWD}"
+                   sh "docker login -u vaishu2000 -p ${dockerHubPWD}"
 
                 }
-                sh "docker commit cisample_app_1 sujjad/todo-app:v${env.BUILD_ID}"
+                sh "docker commit cisample_app_1 vaishu2000/todo-app:v${env.BUILD_ID}"
                 sh "docker push sujjad/todo-app:v${env.BUILD_ID}"
 
             }
@@ -102,7 +102,7 @@ pipeline{
 
             }
         }
-    
+    */
 
     }
 }
