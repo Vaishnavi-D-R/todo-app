@@ -1,8 +1,8 @@
 pipeline{
     agent any;
      tools{
-       maven 'MAVEN-3.6.3'
-       jdk 'JDK 15'
+       maven 'maven'
+       jdk 'JDK11'
    }
     stages{
         stage('Fetch project from github'){
